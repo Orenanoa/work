@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pearl of Africa Cheese</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            plugins: [require('daisyui')],
+        }
+    </script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.0.0/dist/full.css" rel="stylesheet">
+    
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="shortcut icon" href="log.jpg" type="image/x-icon">
+    </head>
+
+    <body class="bg-gray-200" x-data="{ open: false, loginModal: false, signupModal: false }">
+
+        <nav class="bg-white shadow-md w-full z-10 top-0">
+            <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+    
+                <!-- Logo and Title -->
+                <div class="flex items-center">
+                    <img src="log.jpg" alt="Pearl of Africa Cheese" class="h-8 w-8 mr-2">
+                    <span class="text-xl font-bold text-black">Pearl of Africa Cheese</span>
+                </div>
+    
+                <!-- Navigation Links for Larger Screens -->
+                <ul class="hidden md:flex items-center space-x-6">
+                    <li><a href="#home" class="text-black hover:text-black ">Home</a></li>
+                    <li><a href="#menu" class="text-black hover:text-black">Menu</a></li>
+                    <li><a href="#about" class="text-black hover:text-black">About</a></li>
+                    <li><a href="#reservations" class="text-black hover:text-black">Reservations</a></li>
+                </ul>
+    
+                <!-- Sign In and Sign Up Buttons for Larger Screens -->
+                <div class="hidden md:flex space-x-4">
+                    <button @click="loginModal = true" class="bg-blue-600 text-white px-4 py-2 rounded-md transition hover:bg-blue-700">Sign In</button>
+                    <button @click="signupModal = true" class="bg-green-600 text-white px-4 py-2 rounded-md transition hover:bg-green-700">Sign Up</button>
+                </div>
+    
+                <!-- Mobile Menu Icon -->
+                <div class="md:hidden">
+                    <button @click="open = !open" class="text-gray-800 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Dropdown Menu for Mobile -->
+            <div x-show="open" @click.outside="open = false" class="md:hidden bg-white shadow-md rounded-md absolute w-full mt-2">
+                <ul class="py-2 space-y-1">
+                    <li><a href="#home" @click="open = false" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Home</a></li>
+                    <li><a href="#menu" @click="open = false" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Menu</a></li>
+                    <li><a href="#about" @click="open = false" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">About</a></li>
+                    <li><a href="#contact" @click="open = false" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Contact</a></li>
+                    <li><button @click="loginModal = true; open = false" class="block w-full text-left px-4 py-2 text-blue-600 hover:bg-gray-100">Sign In</button></li>
+                    <li><button @click="signupModal = true; open = false" class="block w-full text-left px-4 py-2 text-green-600 hover:bg-gray-100">Sign Up</button></li>
+                </ul>
+            </div>
+        </nav>
+    
+        <!-- Login Modal -->
+        <div x-show="loginModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-20">
+            <div class="bg-white rounded-lg w-80 p-6 shadow-lg relative">
+                <h2 class="text-2xl font-semibold mb-4 text-center text-gray-800">Sign In</h2>
+
+                <form class="space-y-4">
+                    <input type="text" placeholder="Username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="password" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">Login</button>
+                </form>
+                <button @click="loginModal = false" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 9l3-3m0 6L10 9m3 3H7l3-3m0 6a1 1 0 01-2 0V4a1 1 0 112 0v8z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    
+        <!-- Sign Up Modal -->
+        <div x-show="signupModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-20">
+            <div class="bg-white rounded-lg w-80 p-6 shadow-lg relative">
+                <h2 class="text-2xl font-semibold mb-4 text-center text-gray-800">Sign Up</h2>
+                
+                <form class="space-y-4">
+                    <input type="text" placeholder="Username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <input type="email" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <input type="password" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300">Sign Up</button>
+                </form>
+                <button @click="signupModal = false" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 9l3-3m0 6L10 9m3 3H7l3-3m0 6a1 1 0 01-2 0V4a1 1 0 112 0v8z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    
+
+<section id="home" class="relative h-screen bg-gray-200">
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('hot_dogs.jpg'); filter: brightness(0.5);"></div>
+
+    <!-- Text Content -->
+    <div class="relative z-10 container mx-auto flex flex-col items-center justify-center h-full text-center text-white">
+        <h1 class="multiple-text text-4xl md:text-5xl font-bold text-yellow-300 mt-6">Welcome to Pearl of Africa Cheese!</h1>
+        <p class="text-lg md:text-3xl font-bold mt-4">Welcome to Pearl of Africa Cheese!
+            <br> our amazing cheese dishes, pairings, and more!</p>
+    </div>
+</section>
+
+<!-- Scripts for Typed.js and ScrollReveal -->
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Typed.js on the selected text
+        const typed = new Typed('.multiple-text', {
+            strings: ['Welcome to Pearl of Africa Cheese!', 'Discover our amazing cheese dishes!', 'Pairing cheese like never before!'],
+            typeSpeed: 100,
+            backSpeed: 100,
+            backDelay: 1000,
+            loop: true
+        });
+
+        // Apply ScrollReveal to the same text
+        ScrollReveal().reveal('.multiple-text', {
+            distance: '80px',
+            duration: 1000,
+            delay: 200
+        });
+    });
+</script>
+
+
+
+    <section id="menu" class="py-24 bg-gray-300">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold text-green-800 mb-8 ">Our Cheese Menu</h2>
+            <p class="text-lg text-gray-700 mb-12">Explore our exquisite selection of cheeses crafted from the finest ingredients.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cheese Item 1 -->
+                <div class="bg-gray-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105">
+                    <img src="CHEDDAR CHEESE.jpg" alt="Cheddar Cheese" class="w-full h-48 rounded-lg object-cover mb-4">
+                    <h3 class="text-2xl font-semibold text-gray-800">Cheddar Cheese</h3>
+                    <p class="text-gray-600 mb-2">A rich, sharp cheese with a creamy texture, perfect for sandwiches or a cheese platter.</p>
+                    <span class="text-lg font-bold text-gray-800">PRICE-UGX 26000</span>
+                    <a href="#" class="btn" style="background-color: greenyellow;">Add to Cart</a>
+                </div>
+    
+                <!-- Cheese Item 2 -->
+                <div class="bg-gray-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105">
+                    <img src="MOZARELLA.jpg" alt="Mozzarella Cheese" class="w-full h-48 rounded-lg object-cover mb-4">
+                    <h3 class="text-2xl font-semibold text-gray-800">Mozzarella Cheese</h3>
+                    <p class="text-gray-600 mb-2">Soft and milky, this cheese is perfect for pizzas, salads, and pastas.</p>
+                    <span class="text-lg font-bold text-gray-800"> PRICE-UGX 24000</span>
+                    <a href="#" class="btn" style="background-color: greenyellow;">Add to Cart</a>
+                
+                </div>
+    
+                <!-- Cheese Item 3 -->
+                <div class="bg-gray-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105">
+                    <img src="BRIE.jpg" alt="Brie Cheese" class="w-full h-48 rounded-lg object-cover mb-4">
+                    <h3 class="text-2xl font-semibold text-gray-800">Brie Cheese</h3>
+                    <p class="text-gray-600 mb-2">A soft cheese with a creamy interior and a delicate, edible rind. Great with crackers!</p>
+                    <span class="text-lg font-bold text-gray-800">PRICE-UGX 30000</span>
+                    <a href="#" class="btn" style="background-color: greenyellow;">Add to Cart</a>
+                </div>
+    
+                <!-- Cheese Item 4 -->
+                <div class="bg-gray-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105">
+                    <img src="g.jpg" alt="Gouda Cheese" class="w-full h-48 rounded-lg object-cover mb-4">
+                    <h3 class="text-2xl font-semibold text-gray-800">Gouda Cheese</h3>
+                    <p class="text-gray-600 mb-2">A smooth, nutty cheese with a rich flavor that pairs well with fruits.</p>
+                    <span class="text-lg font-bold text-gray-800">PRICE-UGX 25000</span>
+                    <a href="#" class="btn" style="background-color: greenyellow;">Add to Cart</a>
+                </div>
+    
+                <!-- Cheese Item 5 -->
+                <div class="bg-gray-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105">
+                    <img src="blue.jpg" alt="Blue Cheese" class="w-full h-48 rounded-lg object-cover mb-4">
+                    <h3 class="text-2xl font-semibold text-gray-800">Blue Cheese</h3>
+                    <p class="text-gray-600 mb-2">A strong-flavored cheese with a creamy texture and distinctive blue veins.</p>
+                    <span class="text-lg font-bold text-gray-800">PRICE-UGX 32000</span>
+                    <a href="#" class="btn" style="background-color: greenyellow;">Add to Cart</a>
+                </div>
+    
+                <!-- Cheese Item 6 -->
+                <div class="bg-gray-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105">
+                    <img src="PARMESAN .jpg" alt="Parmesan Cheese" class="w-full h-48 rounded-lg object-cover mb-4">
+                    <h3 class="text-2xl font-semibold text-gray-800">Parmesan Cheese</h3>
+                    <p class="text-gray-600 mb-2">A hard, aged cheese with a sharp, salty flavor. Perfect for grating over pasta.</p>
+                    <span class="text-lg font-bold text-gray-800">PRICE-UGX 80000</span>
+                    <a href="#" class="btn" style="background-color: greenyellow;">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="py-24 bg-gray-200">
+        <div class="container mx-auto text-center">
+            <!-- Title -->
+            <h2 class="text-4xl font-extrabold mb-6 text-blue-900 transition-all duration-300 hover:text-green-700">
+                About Us
+            </h2>
+    
+            <!-- Paragraph Text -->
+            <p class="text-lg text-gray-800 mb-12 max-w-3xl mx-auto leading-relaxed transition-all duration-500 hover:scale-105">
+                At <span class="font-semibold text-blue-800">Pearl of Africa Cheese</span>, we are passionate about crafting the finest cheeses, using traditional methods and locally sourced ingredients. Our journey began with a simple mission: to bring the authentic taste of artisan cheese to your table. 
+                Each cheese we produce reflects our commitment to <span class="font-semibold text-blue-700">quality</span>, sustainability, and the rich flavors of the land.
+            </p>
+    
+            <!-- Image -->
+            <img class="w-full h-64 object-cover rounded-lg mb-10 shadow-lg transform hover:scale-105 transition duration-500" src="hot_dogs.jpg" alt="Assorted Cheese Selection">
+    
+            <!-- Subtitle -->
+            <h3 class="text-2xl font-semibold mb-4 text-blue-900">Our Values</h3>
+    
+            <!-- Values List -->
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+                <!-- Quality -->
+                <li class="bg-green-100 rounded-lg shadow-md p-6 transform transition-transform duration-300 hover:scale-105">
+                    <h4 class="text-xl font-bold text-blue-800 mb-2">Quality</h4>
+                    <p class="text-gray-600">We believe in using only the best ingredients to create exceptional cheese.</p>
+                </li>
+    
+                <!-- Sustainability -->
+                <li class="bg-green-100 rounded-lg shadow-md p-6 transform transition-transform duration-300 hover:scale-105">
+                    <h4 class="text-xl font-bold text-blue-800 mb-2">Sustainability</h4>
+                    <p class="text-gray-600">Our cheese is made with eco-friendly practices, ensuring we protect our planet.</p>
+                </li>
+    
+                
+                <li class="bg-green-100 rounded-lg shadow-md p-6 transform transition-transform duration-300 hover:scale-105">
+                    <h4 class="text-xl font-bold text-blue-800 mb-2">Tradition</h4>
+                    <p class="text-gray-600">We honor traditional cheese-making techniques passed down through generations.</p>
+                </li>
+    
+                
+                <li class="bg-green-100 rounded-lg shadow-md p-6 transform transition-transform duration-300 hover:scale-105">
+                    <h4 class="text-xl font-bold text-blue-800 mb-2">Community</h4>
+                    <p class="text-gray-600">We support local farmers and promote a strong, connected community.</p>
+                </li>
+            </ul>
+    
+            
+            <p class="text-lg text-gray-800 mb-8 max-w-2xl mx-auto leading-relaxed transition-all duration-500 hover:scale-105">
+                Join us on this delicious journey and discover the world of artisan cheeses. Whether you are a cheese lover or a curious foodie, we have something special for you. 
+                Explore our menu and experience the best that cheese has to offer!
+            </p>
+    
+            
+            <a href="#menu" class="inline-block text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600
+             hover:to-blue-700 px-8 py-3 rounded-lg font-medium shadow-lg transition-all duration-300 transform hover:scale-105">
+             Explore Our Menu
+            </a>
+        </div>
+    </section>
+       
+    <section id="cheese-selection" class="bg-gray-300 py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Our Cheese Selection</h2>
+            
+            <!-- Dropdown for cheese type selection -->
+            <div class="text-center mb-6">
+                <label for="cheeseType" class="mr-4 font-semibold text-lg">Choose Cheese Type:</label>
+                <select id="cheeseType" class="border border-gray-300 rounded-lg p-2">
+                    <option value="all">All</option>
+                    <option value="hard">Hard Cheese</option>
+                    <option value="soft">Soft Cheese</option>
+                </select>
+            </div>
+    
+            <!-- Search for cheese type -->
+            <div class="text-center mb-6">
+                <input type="text" id="cheeseSearch" placeholder="Search for cheese type..." class="border border-gray-300 rounded-lg p-2">
+            </div>
+    
+            <!-- Cheese cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="cheeseGrid">
+    
+                <!-- Cheddar (Hard Cheese) -->
+                <div class="card bg-white shadow-lg hover:shadow-xl transition duration-300" data-type="hard" data-name="Cheddar Cheese" data-price="20000">
+                    <figure class="px-10 pt-10">
+                        <img src="ched.jpg" alt="Cheddar Cheese" class="rounded-xl h-40 object-cover">
+                    </figure>
+                    <div class="card-body text-center">
+                        <h3 class="text-xl font-bold text-gray-800">Cheddar Cheese</h3>
+                        <p class="text-gray-600 mt-2">Aged for perfection, Cheddar offers a rich, sharp flavor and smooth texture.</p>
+                        <p class="text-lg font-bold text-gray-900 mt-4">UGX 20000 per kg</p>
+                        <div class="mt-4">
+                            <button class="btn btn-primary w-full order-btn">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Gouda (Hard Cheese) -->
+                <div class="card bg-white shadow-lg hover:shadow-xl transition duration-300" data-type="hard" data-name="Gouda Cheese" data-price="22000">
+                    <figure class="px-10 pt-10">
+                        <img src="GROUND.jpg" alt="Gouda Cheese" class="rounded-xl h-40 object-cover">
+                    </figure>
+                    <div class="card-body text-center">
+                        <h3 class="text-xl font-bold text-gray-800">Gouda Cheese</h3>
+                        <p class="text-gray-600 mt-2">Rich, creamy, and slightly sweet, perfect for snacking or cooking.</p>
+                        <p class="text-lg font-bold text-gray-900 mt-4">UGX 22000 per kg</p>
+                        <div class="mt-4">
+                            <button class="btn btn-primary w-full order-btn">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Parmesan (Hard Cheese) -->
+                <div class="card bg-white shadow-lg hover:shadow-xl transition duration-300" data-type="hard" data-name="Parmesan Cheese" data-price="30000">
+                    <figure class="px-10 pt-10">
+                        <img src="par.webp" alt="Parmesan Cheese" class="rounded-xl h-40 object-cover">
+                    </figure>
+                    <div class="card-body text-center">
+                        <h3 class="text-xl font-bold text-gray-800">Parmesan Cheese</h3>
+                        <p class="text-gray-600 mt-2">Aged for 24 months, ideal for grating over pasta and salads.</p>
+                        <p class="text-lg font-bold text-gray-900 mt-4">UGX 30000 per kg</p>
+                        <div class="mt-4">
+                            <button class="btn btn-primary w-full order-btn">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Feta (Soft Cheese) -->
+                <div class="card bg-white shadow-lg hover:shadow-xl transition duration-300" data-type="soft" data-name="Feta Cheese" data-price="25000">
+                    <figure class="px-10 pt-10">
+                        <img src="feta.jpg" alt="Feta Cheese" class="rounded-xl h-40 object-cover">
+                    </figure>
+                    <div class="card-body text-center">
+                        <h3 class="text-xl font-bold text-gray-800">Feta Cheese</h3>
+                        <p class="text-gray-600 mt-2">Tangy and salty, perfect for salads and Mediterranean dishes.</p>
+                        <p class="text-lg font-bold text-gray-900 mt-4">UGX 25000 per kg</p>
+                        <div class="mt-4">
+                            <button class="btn btn-primary w-full order-btn">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Blue (Soft Cheese) -->
+                <div class="card bg-white shadow-lg hover:shadow-xl transition duration-300" data-type="soft" data-name="Brie Cheese" data-price="28000">
+                    <figure class="px-10 pt-10">
+                        <img src="blue cheese.webp" alt="Blue Cheese" class="rounded-xl h-40 object-cover">
+                    </figure>
+                    <div class="card-body text-center">
+                        <h3 class="text-xl font-bold text-gray-800">Blue Cheese</h3>
+                        <p class="text-gray-600 mt-2">Pungent and bold with blue veins, perfect for strong cheese lovers.</p>
+                        <p class="text-lg font-bold text-gray-900 mt-4">UGX 32000 per kg</p>
+                        <div class="mt-4">
+                            <button class="btn btn-primary w-full order-btn">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- puneer (Soft Cheese) -->
+                <div class="card bg-white shadow-lg hover:shadow-xl transition duration-300" data-type="soft" data-name="Mozzarella Cheese" data-price="24000">
+                    <figure class="px-10 pt-10">
+                        <img src="pune.jpg" alt="Puneer Cheese" class="rounded-xl h-40 object-cover">
+                    </figure>
+                    <div class="card-body text-center">
+                        <h3 class="text-xl font-bold text-gray-800">Puneer Cheese</h3>
+                        <p class="text-gray-600 mt-2">Fresh and milky, ideal for pizzas and caprese salads.</p>
+                        <p class="text-lg font-bold text-gray-900 mt-4">UGX 23000 per kg</p>
+                        <div class="mt-4">
+                            <button class="btn btn-primary w-full order-btn">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <!-- Order Online Section -->
+            <div id="order-online" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4">Order Online</h3>
+                    <p class="mb-2">Selected Cheese: <span id="selectedCheese" class="font-bold"></span></p>
+                    <p class="mb-2">Price: <span id="selectedPrice" class="font-bold"></span></p>
+                    <p class="mb-2">Please select your payment method:</p>
+                    <div class="flex flex-col space-y-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="paymentMethod" value="credit" class="mr-2" required>
+                            Credit/Debit Card
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="paymentMethod" value="paypal" class="mr-2" required>
+                            PayPal
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="paymentMethod" value="cash" class="mr-2" required>
+                            Cash on Delivery
+                        </label>
+                    </div>
+                    <button id="confirmOrder" class="btn btn-primary mt-4 w-full">Confirm Order</button>
+                    <button id="closeOrder" class="btn btn-secondary mt-2 w-full">Cancel</button>
+                </div>
+            </div>
+    
+            <!-- Notification about negotiable prices for bulk purchases -->
+            <div class="bg-blue-100 text-blue-900 text-center mt-8 p-4 rounded-lg shadow-md">
+                <p class="text-lg font-semibold">💡 Special Offer: Prices are negotiable if you buy in bulk! Contact us for more details.</p>
+            </div>
+        </div>
+    
+        <script>
+            // Show Order Online Modal
+            document.querySelectorAll('.order-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const cheeseName = this.closest('.card').getAttribute('data-name');
+                    const cheesePrice = this.closest('.card').getAttribute('data-price');
+                    document.getElementById('selectedCheese').textContent = cheeseName;
+                    document.getElementById('selectedPrice').textContent = `UGX ${cheesePrice}`;
+                    alert("💡 Special Offer: Prices are negotiable if you buy in bulk! Contact us for more details.");
+                    document.getElementById('order-online').classList.remove('hidden');
+                });
+            });
+    
+            // Close Order Online Modal
+            document.getElementById('closeOrder').addEventListener('click', function() {
+                document.getElementById('order-online').classList.add('hidden');
+            });
+    
+            // Handle Order Confirmation
+            document.getElementById('confirmOrder').addEventListener('click', function() {
+                const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+                if (selectedPayment) {
+                    alert(`Order confirmed for ${document.getElementById('selectedCheese').textContent}! Payment Method: ${selectedPayment.value}`);
+                    document.getElementById('order-online').classList.add('hidden');
+                } else {
+                    alert('Please select a payment method.');
+                }
+            });
+    
+            // Filter cheese cards based on selection
+            document.getElementById('cheeseType').addEventListener('change', function() {
+                const selectedType = this.value;
+                const cards = document.querySelectorAll('#cheeseGrid .card');
+    
+                cards.forEach(card => {
+                    if (selectedType === 'all' || card.getAttribute('data-type') === selectedType) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+    
+            // Search for cheese types
+            document.getElementById('cheeseSearch').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const cards = document.querySelectorAll('#cheeseGrid .card');
+    
+                cards.forEach(card => {
+                    const cheeseName = card.getAttribute('data-name').toLowerCase();
+                    if (cheeseName.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+    </section>
+    
+    <section id="reservations" class="bg-gradient-to-r from-blue-300 to-blue-300 py-16">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-yellow-500">Make a Reservation</h2>
+            <p class="text-black-400 mt-2 text-2xl">Reserve a table and enjoy our cheesy delights!</p>
+          </div>
+      
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Reservation form -->
+            <div class="bg-white p-8 shadow-lg rounded-lg">
+
+              <form>
+                <div class="form-control mb-4">
+                  <label class="label">
+                    <span class="label-text-gray-900 text-xl">Name</span>
+                  </label>
+                  <input type="text" placeholder="Your Name" class="input input-bordered w-full text-white" required>
+                </div>
+                <div class="form-control mb-4">
+                  <label class="label">
+                    <span class="label-text-gray-900">Email</span>
+                  </label>
+                  <input type="email" placeholder="Your Email" class="input input-bordered w-full text-white" required>
+                </div>
+                <div class="form-control mb-4">
+                  <label class="label">
+                    <span class="label-text-gray-900">Phone</span>
+                  </label>
+                  <input type="tel" placeholder="Your Phone Number" class="input input-bordered w-full text-white" required>
+                </div>
+                <div class="form-control mb-4">
+                  <label class="label">
+                    <span class="label-text-gray-900">Date</span>
+                  </label>
+                  <input type="date" class="input input-bordered w-full text-white" required>
+                </div>
+                <div class="form-control mb-4">
+                  <label class="label">
+                    <span class="label-text-gray-900">Time</span>
+                  </label>
+                  <input type="time" class="input input-bordered w-full text-white" required>
+                </div>
+                <div class="form-control mb-6">
+                  <label class="label">
+                    <span class="label-text-gray-900">Number of Guests</span>
+                  </label>
+                  <input type="number" placeholder="2" min="1" max="20" class="input input-bordered w-full text-white" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-full">
+                  Reserve Now
+                </button>
+              </form>
+            </div>
+      
+            <!-- Reservation Information -->
+            <div class="flex flex-col justify-center items-center text-center bg-white p-8 shadow-lg rounded-lg">
+              <h3 class="text-3xl font-bold text-blue-800">Visit Us</h3>
+              <p class="text-blue-600 mt-4">
+                Come and enjoy our cheesy masterpieces made with the finest ingredients.
+              </p>
+              <p class="text-blue-600 mt-2">
+                Address: Wakaliga Rubaga division
+              </p>
+              <p class="text-blue-600 mt-2">
+                Phone:  +256 705 885 495
+                pjone:  +256 777 119 194
+              </p>
+              <p class="text-blue-600 mt-2">
+                Email: pearlofafricastepc@gmail.com
+              </p>
+              <div class="mt-6">
+                <button class="btn btn-outline btn-primary">Get Directions</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+    
+    <footer class="bg-gray-700 text-white py-8">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            
+            <!-- About Section -->
+            <div>
+                <h4 class="text-lg font-bold mb-4">Pearl of Africa Cheese</h4>
+                <p class="text-sm">Bringing the finest artisan cheeses to your table with a commitment to quality and tradition.</p>
+            </div>
+            
+            <!-- Blogs and FAQs -->
+            <div>
+                <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                <ul>
+                    <li><a href="#blogs" class="text-sm hover:text-gray-400 transition duration-300">Blogs</a></li>
+                    <li><a href="#faqs" class="text-sm hover:text-gray-400 transition duration-300">FAQs</a></li>
+                </ul>
+            </div>
+    
+            
+            <div>
+                <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+                <ul>
+                    <li class="text-sm">Phone: +256 705 885 495</li>
+                    <li class="text-sm">Phone: +256 777 119 194</li>
+                    <li class="text-sm">Email: <a href="" class="hover:text-gray-400 transition duration-300">
+                        pearlofafricastepc@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+    
+        <!-- Social Media Icons -->
+        <div class="container mx-auto mt-8 flex justify-center space-x-6">
+            <a href="https://facebook.com" target="_blank" class="hover:text-gray-400 transition duration-300">
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M22.675 0h-21.35c-.729 0-1.325.596-1.325 1.325v21.351c0 .728.596 1.324 1.325 1.324h11.497v-9.283h-3.129v-3.621h3.129v-2.671c0-3.099 1.894-4.787 4.661-4.787 1.325 0 2.463.099 2.793.143v3.24h-1.918c-1.504 0-1.795.715-1.795 1.764v2.311h3.588l-.467 3.621h-3.121v9.283h6.116c.729 0 1.325-.596 1.325-1.324v-21.35c0-.729-.596-1.325-1.325-1.325z"/>
+                </svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" class="hover:text-gray-400 transition duration-300">
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-2.719 0-4.924 2.206-4.924 4.924 0 .386.043.762.128 1.124-4.092-.205-7.719-2.165-10.141-5.144-.424.729-.667 1.575-.667 2.476 0 1.708.87 3.215 2.19 4.099-.807-.026-1.566-.247-2.228-.617v.062c0 2.385 1.698 4.374 3.946 4.827-.413.112-.849.172-1.296.172-.317 0-.626-.03-.927-.086.627 1.956 2.445 3.379 4.6 3.419-1.685 1.321-3.809 2.11-6.114 2.11-.398 0-.79-.023-1.177-.068 2.179 1.396 4.768 2.21 7.548 2.21 9.055 0 14.01-7.505 14.01-14.01 0-.213-.005-.426-.014-.637.962-.694 1.8-1.562 2.462-2.549z"/>
+                </svg>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="hover:text-gray-400 transition duration-300">
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.206.056 1.878.246 2.318.41.586.22 1.01.48 1.45.92.44.44.7.864.92 1.45.163.44.354 1.112.41 2.318.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.206-.246 1.878-.41 2.318-.22.586-.48 1.01-.92 1.45-.44.44-.864.7-1.45.92-.44.163-1.112.354-2.318.41-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.206-.056-1.878-.246-2.318-.41-.586-.22-1.01-.48-1.45-.92-.44-.44-.7-.864-.92-1.45-.163-.44-.354-1.112-.41-2.318-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.056-1.206.246-1.878.41-2.318.22-.586.48-1.01.92-1.45.44-.44.864-.7 1.45-.92.44-.163 1.112-.354 2.318-.41 1.266-.058 1.646-.07 4.85-.07m0-2.163c-3.259 0-3.667.014-4.947.072-1.277.058-2.154.27-2.909.573-.79.316-1.462.741-2.133 1.413-.672.672-1.097 1.343-1.413 2.133-.303.755-.515 1.632-.573 2.909-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.058 1.277.27 2.154.573 2.909.316.79.741 1.462 1.413 2.133.672.672 1.343 1.097 2.133 1.413.755.303 1.632.515 2.909.573 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.277-.058 2.154-.27 2.909-.573.79-.316 1.462-.741 2.133-1.413.672-.672 1.097-1.343 1.413-2.133.303-.755.515-1.632.573-2.909.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.058-1.277-.27-2.154-.573-2.909-.316-.79-.741-1.462-1.413-2.133-.672-.672-1.343-1.097-2.133-1.413-.755-.303-1.632-.515-2.909-.573-1.28-.058-1.688-.072-4.947-.072z"/>
+                    <path d="M12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4zm6.406-11.845c-.796 0-1.44.645-1.44 1.44s.645 1.44 1.44 1.44 1.44-.645 1.44-1.44-.645-1.44-1.44-1.44z"/>
+                </svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" class="hover:text-gray-400 transition duration-300">
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.448 19.448h-3.555v-5.45c0-1.298-.026-2.971-1.81-2.971-1.81 0-2.088 1.414-2.088 2.879v5.542h-3.554v-11.206h3.414v1.529h.047c.475-.898 1.637-1.844 3.369-1.844 3.602 0 4.268 2.369 4.268 5.456v6.065zm-12.28-12.281c-1.145 0-2.073-.927-2.073-2.072s.928-2.073 2.073-2.073c1.145 0 2.073.928 2.073 2.073s-.928 2.072-2.073 2.072zm1.778 12.281h-3.555v-11.206h3.555v11.206zm14.054-19.448h-24v24h24v-24z"/>
+                </svg>
+            </a>
+        </div>
+    
+        <!-- Footer Bottom -->
+        <div class="container mx-auto mt-8 text-center">
+            <p class="text-sm">&copy; 2024 Pearl of Africa Cheese. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    
+</body>
+</html>
